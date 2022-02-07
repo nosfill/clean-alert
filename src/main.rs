@@ -1,4 +1,3 @@
-// use std::io::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::fs;
 
@@ -59,31 +58,20 @@ fn main() {
 
     // Make SlackApp instance
     let bot = SlackApp::new(env.token, env.id);
-    // dbg!(bot);
-
-    // Read latest member for log
+    
+    // Select this week cleaner from Channel member (except "ignore_member" and "latest_member").
     let latest_member_id = read_latest_member_id().unwrap();
-
-    // Remove "ignore_member" and "latest_member" and channel member
     let target: Vec<String> = env.member
         .into_iter()
         .filter(|x| !env.ignore_member.contains(x) && !latest_member_id.contains(x))
         .collect();
-
+    let cleaner = select_user(&target);
+    
     // Send message
-    let selected_user = select_user(&target);
-    let message = make_message(&selected_user);
+    let message = make_message(&cleaner);
     bot.post_message(&message).unwrap();
-
-    // Record latest_member
-    dbg!(selected_user);
+    
+    // Record this week cleaner to member_log.csv
+    bot.record_cleaner(cleaner).unwrap();
     ()
-
-    // Next Update
-
-    // Update channel member (commandline argument)
-    // let member_id = bot.get_channel_member_id().unwrap();
-
-    // Record latest_member
-    // let member_id = bot.get_channel_member_id().unwrap();
 }
