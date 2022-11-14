@@ -1,0 +1,10 @@
+{
+    "token": "xoxb-xxxx This is the token owned by the Slack App",
+    "id": "Your slack app id",
+    "member": [
+    ],
+    "ignore_member": [
+    ],
+    "message_jp": "今週のゴミ掃除担当です．\n作業が終了したら，この投稿に:done:をつけてください.",
+    "message_en": "You are in charge of the garbage disposal of this week.\nWhen you're done, please put a reaction :done: to this post."
+}
