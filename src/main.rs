@@ -47,7 +47,7 @@ fn make_message(members: &Vec<String>) -> String {
     let en = "You are in charge of the garbage disposal of this week.\nWhen you're done, please reaction :done: to this post.";
 
     format!(
-        "<@U01U3MXRF36> <@{}> <@{}>\n{}\n\n{}",
+        "<@{}> <@{}>\n{}\n\n{}",
         members[0], members[1], jp, en
     )
 }
