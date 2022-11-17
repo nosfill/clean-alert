@@ -44,7 +44,7 @@ fn select_user(members: &Vec<String>) -> Vec<String> {
 
 fn make_message(members: &Vec<String>) -> String {
     let jp = "今週のゴミ掃除担当です．\n作業が終了したら，この投稿に:done:をつけてください.";
-    let en = "You are in charge of the garbage disposal of this week.\nWhen you're done, please reaction :done: to this post.";
+    let en = "You are in charge of the garbage disposal of this week.\nWhen you're done, please react :done: to this post.";
 
     format!(
         "<@{}> <@{}>\n{}\n\n{}",
