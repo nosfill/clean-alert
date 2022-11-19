@@ -53,6 +53,7 @@ fn make_message(members: &Vec<String>) -> String {
 }
 
 fn main() {
+    openssl_probe::init_ssl_cert_env_vars();
     // Load environment variable
     let env = Env::new();
 

@@ -45,3 +45,12 @@ Notification of cleaning turn via Slack API.
     # Execution every Wednesday at 15:00.
     $ 0 15 * * 3 <path to clean-alert>
     ```
+
+## How to build
+
+If you have docker, Please try to run this command that builds clean-alert program without linking the dynamic library.
+(working directory: clean-alert/ )
+
+```bash
+$ docker run --rm -it -v `pwd`:/home/rust/src ekidd/rust-musl-builder cargo build --release
+```
