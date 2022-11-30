@@ -44,7 +44,7 @@ fn select_user(members: &Vec<String>) -> Vec<String> {
 
 fn make_message(members: &Vec<String>) -> String {
     let jp = "今週のゴミ掃除担当です．\n作業が終了したら，この投稿に:done:をつけてください.";
-    let en = "You are in charge of the garbage disposal of this week.\nWhen you're done, please reaction :done: to this post.";
+    let en = "You are in charge of the garbage disposal of this week.\nWhen you're done, please react :done: to this post.";
 
     format!(
         "<@{}> <@{}>\n{}\n\n{}",
@@ -53,7 +53,9 @@ fn make_message(members: &Vec<String>) -> String {
 }
 
 fn main() {
+    
     openssl_probe::init_ssl_cert_env_vars();
+
     // Load environment variable
     let env = Env::new();
 
@@ -67,12 +69,19 @@ fn main() {
         .filter(|x| !env.ignore_member.contains(x) && !latest_member_id.contains(x))
         .collect();
     let cleaner = select_user(&target);
-    
-    // Send message
-    let message = make_message(&cleaner);
-    bot.post_message(&message).unwrap();
-    
-    // Record this week cleaner to member_log.csv
-    bot.record_cleaner(cleaner).unwrap();
-    ()
+
+    // Detect day of the week
+    use chrono::prelude::*;
+
+    let dt = Utc::now();
+    if dt.weekday() == Weekday::Wed {
+        println!("Today is a cleanup day. Will be sent a notice to Slack!");
+        // Send message
+        let message = make_message(&cleaner);
+        bot.post_message(&message).unwrap();
+
+        // Record this week cleaner to member_log.csv
+        bot.record_cleaner(cleaner).unwrap();
+        ()
+    }
 }
