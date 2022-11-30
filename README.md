@@ -44,6 +44,7 @@ You may change the message, if you like to.
     ```
 
    You may clean before build, `cargo clean`
+   After build cargo will generate `clean-alert` binary file, to be executed.
 
 3. Run clean-alert
 

@@ -69,12 +69,19 @@ fn main() {
         .filter(|x| !env.ignore_member.contains(x) && !latest_member_id.contains(x))
         .collect();
     let cleaner = select_user(&target);
-    
-    // Send message
-    let message = make_message(&cleaner);
-    bot.post_message(&message).unwrap();
-    
-    // Record this week cleaner to member_log.csv
-    bot.record_cleaner(cleaner).unwrap();
-    ()
+
+    // Detect day of the week
+    use chrono::prelude::*;
+
+    let dt = Utc::now();
+    if dt.weekday() == Weekday::Wed {
+        println!("Today is a cleanup day. Will be sent a notice to Slack!");
+        // Send message
+        let message = make_message(&cleaner);
+        bot.post_message(&message).unwrap();
+
+        // Record this week cleaner to member_log.csv
+        bot.record_cleaner(cleaner).unwrap();
+        ()
+    }
 }
