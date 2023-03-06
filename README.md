@@ -14,7 +14,7 @@ Notification of cleaning turn via Slack API.
 0. Clone this repository and move.
 
     ```bash
-    $ git clone https://github.com/nosfill/clean-alert.git
+    $ git clone https://github.com/NAIST-SE/clean-alert/blob/main/README.md
     $ cd clean-alert
     ```
 
