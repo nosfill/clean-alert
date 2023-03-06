@@ -14,7 +14,7 @@ struct Env {
 
 impl Env {
     fn new() -> Self {
-        let file = fs::read_to_string("channel_info.json").expect("Failed to load channel.json");
+        let file = fs::read_to_string("/home/ani-ho/clean-alert/channel_info.json").expect("Failed to load channel.json");
         let env: Env = serde_json::from_str(&file).unwrap();
         env
     }
@@ -75,7 +75,7 @@ fn main() {
 
     let dt = Utc::now();
     if dt.weekday() == Weekday::Wed {
-        println!("Today is a cleanup day. Will be sent a notice to Slack!");
+        println!("Trash Mangement System >>> Today is a cleanup day. Will be sent a notice to Slack!");
         // Send message
         let message = make_message(&cleaner);
         bot.post_message(&message).unwrap();
@@ -83,5 +83,7 @@ fn main() {
         // Record this week cleaner to member_log.csv
         bot.record_cleaner(cleaner).unwrap();
         ()
+    } else {
+        println!("Trash Mangement System >>> Today is not a cleanup day. Check again on Wednesday!");
     }
 }
