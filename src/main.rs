@@ -14,7 +14,7 @@ struct Env {
 
 impl Env {
     fn new() -> Self {
-        let file = fs::read_to_string("/home/ani-ho/clean-alert/channel_info.json").expect("Failed to load channel.json");
+        let file = fs::read_to_string("./channel_info.json").expect("Failed to load channel.json");
         let env: Env = serde_json::from_str(&file).unwrap();
         env
     }
