@@ -42,7 +42,7 @@ fn select_user(members: &Vec<String>) -> Vec<String> {
     vec![pattern[0][0].to_owned(), pattern[0][1].to_owned()]
 }
 
-fn make_message(members: &Vec<String>) -> String {
+fn make_trash_message(members: &Vec<String>) -> String {
     let jp = "今週のゴミ掃除担当です．\n作業が終了したら，この投稿に:done:をつけてください.";
     let en = "You are in charge of the garbage disposal of this week.\nWhen you're done, please react :done: to this post.";
 
@@ -51,6 +51,17 @@ fn make_message(members: &Vec<String>) -> String {
         members[0], members[1], jp, en
     )
 }
+
+fn make_roomba_message(members: &Vec<String>) -> String {
+    let jp = "今週のルンバ掃除機のチェックも担当してください。\n作業が終了したら，この投稿に:done_red:をつけてください。";
+    let en = "You are also in charge of checking Roomba Vacuum Cleaner this week.\nWhen you're done, please react :done_red: to this post.";
+
+    format!(
+        "<@{}> <@{}>\n{}\n\n{}",
+        members[0], members[1], jp, en
+    )
+}
+
 
 fn main() {
     
@@ -75,10 +86,14 @@ fn main() {
 
     let dt = Utc::now();
     if dt.weekday() == Weekday::Wed {
-        println!("Trash Mangement System >>> Today is a cleanup day. Will be sent a notice to Slack!");
-        // Send message
-        let message = make_message(&cleaner);
-        bot.post_message(&message).unwrap();
+        println!("Trash Mangement System >>> Today is a cleanup day. Will be sent a Trash and Roomba notice to Slack!");
+        // Post Slack message for Trash throwing
+        let message_trash = make_trash_message(&cleaner);
+        bot.post_message(&message_trash).unwrap();
+
+        // Post Roomba message for Roomba checking
+        let message_roomba = make_roomba_message(&cleaner);
+        bot.post_message(&message_roomba).unwrap();
 
         // Record this week cleaner to member_log.csv
         bot.record_cleaner(cleaner).unwrap();
